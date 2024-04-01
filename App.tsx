@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Platform, StatusBar, ScrollView, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Platform, StatusBar, ScrollView, ActivityIndicator, Alert, Keyboard } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useState } from 'react'
 
@@ -17,6 +17,15 @@ export default function App() {
   const [ingr4, defIngr4] = useState("");
   const [ocasiao, defOcasiao] = useState("");
 
+  async function gerarReceita() {
+    if (ingr1 === "" || ingr2 === "" || ingr3 === "" || ingr4 === "" || ocasiao === "") {
+      Alert.alert("Atenção", "Informe todos os ingredientes!", [{ text: "Beleza!" }])
+      return;
+    }
+    defReceita("");
+    defLoad(true);
+    Keyboard.dismiss();
+  }
 
   return (
     <View style={ESTILOS.container}>
@@ -56,7 +65,7 @@ export default function App() {
         />
       </View>
 
-      <TouchableOpacity style={ESTILOS.button}>
+      <TouchableOpacity style={ESTILOS.button} onPress={gerarReceita}>
         <Text style={ESTILOS.buttonText}>Gerar receita</Text>
         <MaterialIcons name="travel-explore" size={24} color="#FFF" />
       </TouchableOpacity>
